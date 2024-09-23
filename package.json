@@ -1,0 +1,12 @@
+{
+    "name": "2024webprogramming",
+    "version": "1.0.0",
+    "description": "",
+    "scripts": {
+        "start": "node server/index.mjs"
+    },
+    "dependencies": {
+        "express": "4.21.0",
+        "dayjs": "1.11.13"
+    }
+}
