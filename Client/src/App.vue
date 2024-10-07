@@ -6,17 +6,20 @@ import NavBar from './components/NavBar.vue'
 <template>
   <header>
     <NavBar />
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
   </header>
 
-  <RouterView />
+  <div class="container">
+    <RouterView />
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+body {
+  background-color: aliceblue;
+}
+.container {
+  background-color: white;
+  box-shadow: drop-shadow(0 0 10px rgba(0, 0, 0, 0.8));
+  min-height: 100vh;
+}
+</style>
