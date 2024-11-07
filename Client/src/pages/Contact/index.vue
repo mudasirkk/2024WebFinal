@@ -6,13 +6,32 @@
     <h2 class="subtitle">We'd love to hear from you</h2>
 
     <form>
-      <label for="name">Name:</label>
-      <input type="text" id="name" name="name" /><br /><br />
-      <label for="email">Email:</label>
-      <input type="text" id="email" name="email" /><br /><br />
-      <label for="message">Message:</label><br />
-      <textarea id="message" name="message" rows="4" cols="50"></textarea><br /><br />
-      <input type="submit" value="Submit" />
+      <div class="field">
+        <label class="label">Name</label>
+        <div class="control">
+          <input class="input" type="text" placeholder="Your name" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Email</label>
+        <div class="control">
+          <input class="input" type="email" placeholder="Your email" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Message</label>
+        <div class="control">
+          <textarea class="textarea" placeholder="Your message"></textarea>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <button class="button is-primary">Submit</button>
+        </div>
+      </div>
     </form>
   </div>
 </template>

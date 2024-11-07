@@ -1,5 +1,5 @@
 import data from '../data/products.json'
-import type { DataEnvelope, DataListEnvelope } from './dataEnvelope'
+import type { DataListEnvelope } from './dataEnvelope'
 
 export function getAll(): DataListEnvelope<Product> {
   return {
