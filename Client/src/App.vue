@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import NavBar from './components/NavBar.vue'
+import NavBar from '@/components/NavBar.vue'
 </script>
 
 <template>
@@ -17,6 +17,7 @@ import NavBar from './components/NavBar.vue'
 body {
   background-color: aliceblue;
 }
+
 .container {
   background-color: white;
   box-shadow: drop-shadow(0 0 10px rgba(0, 0, 0, 0.8));
