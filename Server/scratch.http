@@ -1,0 +1,38 @@
+###
+GET https://google.com
+
+###
+POST https://dummyjson.com/products/add
+MyHeader: MyValue
+
+{
+    "title": "Green Lip Stick",
+    "price": 12.99,
+    "description": "A green lip stick for the bold and daring.",
+    "image": "https://dummyimage.com/300x300.png/00ff00/ffffff",
+
+}
+
+###
+GET http://localhost:3000/about
+
+###
+GET http://localhost:3000/users
+
+###
+GET http://localhost:3000/users/30
+
+###
+DELETE http://localhost:3000/users/1
+
+###
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+    "firstName": "Mudasir",
+    "lastName": "Khan",
+    "age": 30,
+    "email": "khan@newpaltz.edu",
+    "password": "123456"
+}
