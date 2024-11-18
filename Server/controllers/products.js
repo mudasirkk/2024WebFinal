@@ -1,6 +1,13 @@
-const model = require("../model/users");
+const model = require("../model/products");
 const express = require("express");
 const app = express.Router();
+
+/* Four ways to send data to the server: 
+    - Query Parameters
+    - Path Parameters
+    - Request Body
+    - Headers
+*/
 
 app
   .get("/", (req, res, next) => {
@@ -29,7 +36,7 @@ app
       .then((x) => res.send(x))
       .catch(next);
   })
-  .delete("/:id", (req, res, next) => {
+  .delete("/:id", (req, res) => {
     const id = req.params.id;
     model
       .remove(+id)
