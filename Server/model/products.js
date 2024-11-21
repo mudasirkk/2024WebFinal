@@ -8,6 +8,10 @@ const data = require("../data/products.json");
  */
 
 /**
+ * @typedef {import("../../Client/src/models/products").Product} Product
+ */
+
+/**
  * Get all users
  * @returns {Promise<DataListEnvelope<Product>>}
  */
@@ -20,12 +24,12 @@ async function getAll() {
 }
 
 /**
- * Get user by id
+ * Get product by id
  * @param {number} id
  * @returns {Promise<DataEnvelope<Product>>}
  */
 async function get(id) {
-  const item = data.items.find((user) => user.id == id);
+  const item = data.items.find((product) => product.id == id);
   return {
     isSuccess: !!item,
     data: item,
@@ -33,41 +37,42 @@ async function get(id) {
 }
 
 /**
- * Add a new user
- * @param {Product} user
+ * Add a new product
+ * @param {Product} product
  * @returns {Promise<DataEnvelope<Product>>}
  */
-async function add(user) {
-  user.id = data.items.reduce((prev, x) => (x.id > prev ? x.id : prev), 0) + 1;
-  data.items.push(user);
+async function add(product) {
+  product.id =
+    data.items.reduce((prev, x) => (x.id > prev ? x.id : prev), 0) + 1;
+  data.items.push(product);
   return {
     isSuccess: true,
-    data: user,
+    data: product,
   };
 }
 
 /**
- * Update a user
+ * Update a product
  * @param {number} id
- * @param {Product} user
+ * @param {Product} product
  * @returns {Promise<DataEnvelope<Product>>}
  */
-async function update(id, user) {
-  const userToUpdate = get(id);
-  Object.assign(userToUpdate, user);
+async function update(id, product) {
+  const productToUpdate = await get(id);
+  Object.assign(productToUpdate, product);
   return {
     isSuccess: true,
-    data: userToUpdate,
+    data: productToUpdate,
   };
 }
 
 /**
- * Remove a user
+ * Remove a product
  * @param {number} id
  * @returns {Promise<DataEnvelope<number>>}
  */
 async function remove(id) {
-  const itemIndex = data.items.findIndex((user) => user.id == id);
+  const itemIndex = data.items.findIndex((product) => product.id == id);
   if (itemIndex === -1)
     throw { isSuccess: false, message: "Item not found", data: id };
   data.items.splice(itemIndex, 1);
