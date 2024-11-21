@@ -20,7 +20,7 @@ export function remove(id: number) {
   return api<DataEnvelope<Product>>(`products/${id}`, undefined, 'DELETE')
 }
 
-export interface Review {
+interface Review {
   rating: number
   comment: string
   date: string

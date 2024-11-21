@@ -1,5 +1,7 @@
 /** @type {{ items: Product[] }} */
 const data = require("../data/products.json");
+const { getConnection } = require("./supabase");
+const conn = getConnection();
 
 /**
  * @template T
@@ -16,10 +18,13 @@ const data = require("../data/products.json");
  * @returns {Promise<DataListEnvelope<Product>>}
  */
 async function getAll() {
+  const { data, error, count } = await conn
+    .from("products")
+    .select("*", { count: "estimated" });
   return {
     isSuccess: true,
-    data: data.items,
-    total: data.items.length,
+    data: data,
+    total: count,
   };
 }
 
