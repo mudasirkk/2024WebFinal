@@ -64,10 +64,10 @@ async function add(product) {
  */
 async function update(id, product) {
   const productToUpdate = await get(id);
-  Object.assign(productToUpdate, product);
+  Object.assign(productToUpdate.data, product);
   return {
     isSuccess: true,
-    data: productToUpdate,
+    data: productToUpdate.data,
   };
 }
 
