@@ -36,7 +36,7 @@ app
       .then((x) => res.send(x))
       .catch(next);
   })
-  .delete("/:id", (req, res) => {
+  .delete("/:id", (req, res, next) => {
     const id = req.params.id;
     model
       .remove(+id)
