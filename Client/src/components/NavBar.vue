@@ -50,6 +50,7 @@ const isCartOpen = ref(false)
 
         <div class="navbar-end">
           <div class="navbar-item">
+            <div class="buttons">       
             <LoginBadge />
             <button
               class="button is-warning is-light is-active"

@@ -1,5 +1,5 @@
-import { errorMessages } from "vue/compiler-sfc"
-import { loadScript } from "./myFetch"
+import { ref } from 'vue'
+import { loadScript } from './myFetch'
 
 export class User {
   id?: number
@@ -37,27 +37,24 @@ const session = ref({
 
 export const refSession = () => session
 
-export const useLogin => ({
-  async login(email: string, password: string) {
-  },
+export const useLogin = () => ({
+  async login(email: string, password: string) {},
   async logout() {
     session.value.user = null
   },
   async googleLogin() {
-    await loadScript('https://apis.google.com/js/api.js')
     await loadScript('https://accounts.google.com/gsi/client')
 
     const tokenClient = google.accounts.oauth2.initTokenClient({
       client_id: 'import.meta.env.VITE_GOOGLE_CLIENT_ID',
       scope: 'email',
-      callback: (response, any) => {
-        if(response.credential) {
-          session.value.token = response.credential
-          firstName = response.given_name,
-          lastName = response.family_name,
-          email = response.email
+      callback: (response: any) => {
+        console.log('response', response)
+        if (response.access_token) {
+          session.value.token = response.access_token
+        }
+        tokenClient.requestAccessToken({})
       }
     })
   }
-
 })
