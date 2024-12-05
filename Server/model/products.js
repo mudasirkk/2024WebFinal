@@ -22,7 +22,8 @@ async function getAll() {
     .from("products")
     .select("*", { count: "estimated" });
   return {
-    isSuccess: true,
+    isSuccess: !error,
+    message: error?.message,
     data: data,
     total: count,
   };
@@ -34,10 +35,15 @@ async function getAll() {
  * @returns {Promise<DataEnvelope<Product>>}
  */
 async function get(id) {
-  const item = data.items.find((product) => product.id == id);
+  const { data, error } = await conn
+    .from("products")
+    .select("*, reviews(*)")
+    .eq("id", id)
+    .single();
   return {
-    isSuccess: !!item,
-    data: item,
+    isSuccess: !error,
+    message: error?.message,
+    data: data,
   };
 }
 
@@ -47,13 +53,55 @@ async function get(id) {
  * @returns {Promise<DataEnvelope<Product>>}
  */
 async function add(product) {
-  product.id =
-    data.items.reduce((prev, x) => (x.id > prev ? x.id : prev), 0) + 1;
-  data.items.push(product);
+  const { data, error } = await conn
+    .from("products")
+    .insert([
+      {
+        images: product.images,
+        category: product.category,
+        description: product.description,
+        price: product.price,
+        title: product.title,
+        dimensions: product.dimensions,
+        minimumOrderQuantity: product.minimumOrderQuantity,
+        rating: product.rating,
+        returnPolicy: product.returnPolicy,
+        tags: product.tags,
+        weight: product.weight,
+        thumbnail: product.thumbnail,
+        brand: product.brand,
+      },
+    ])
+    .select("*")
+    .single();
+
+  if (product.reviews?.length) {
+    await conn
+      .from("reviews")
+      .insert(
+        product.reviews.map((review) => ({
+          productId: data.id,
+          rating: review.rating,
+          comment: review.comment,
+          reviewerEmail: review.reviewerEmail,
+          reviewerName: review.reviewerName,
+          date: review.date,
+        }))
+      )
+      .select("*");
+  }
+
   return {
-    isSuccess: true,
-    data: product,
+    isSuccess: !error,
+    message: error?.message,
+    data: data,
   };
+}
+
+async function seed() {
+  for (const product of data.items) {
+    await add(product);
+  }
 }
 
 /**
@@ -63,11 +111,32 @@ async function add(product) {
  * @returns {Promise<DataEnvelope<Product>>}
  */
 async function update(id, product) {
-  const productToUpdate = await get(id);
-  Object.assign(productToUpdate.data, product);
+  const { data, error } = await conn
+    .from("products")
+    .update({
+      images: product.images,
+      category: product.category,
+      description: product.description,
+      price: product.price,
+      title: product.title,
+      dimensions: product.dimensions,
+      minimumOrderQuantity: product.minimumOrderQuantity,
+      rating: product.rating,
+      returnPolicy: product.returnPolicy,
+      tags: product.tags,
+      weight: product.weight,
+      thumbnail: product.thumbnail,
+      brand: product.brand,
+      updatedAt: new Date().toISOString(), // mark it with the latest timestamp every time it's updated
+    })
+    .eq("id", id)
+    .select("*")
+    .single();
+
   return {
-    isSuccess: true,
-    data: productToUpdate.data,
+    isSuccess: !error,
+    message: error?.message,
+    data: data,
   };
 }
 
@@ -77,14 +146,17 @@ async function update(id, product) {
  * @returns {Promise<DataEnvelope<number>>}
  */
 async function remove(id) {
-  const itemIndex = data.items.findIndex((product) => product.id == id);
-  if (itemIndex === -1)
-    throw { isSuccess: false, message: "Item not found", data: id };
-  data.items.splice(itemIndex, 1);
+  const { data, error } = await conn
+    .from("products")
+    .delete()
+    .eq("id", id)
+    .select("*")
+    .single();
+
   return {
-    isSuccess: true,
-    message: "Item deleted",
-    data: id,
+    isSuccess: !error,
+    message: error?.message,
+    data: data,
   };
 }
 
@@ -94,4 +166,5 @@ module.exports = {
   add,
   update,
   remove,
+  seed,
 };

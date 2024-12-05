@@ -32,11 +32,12 @@ const isCartOpen = ref(false)
 
       <div class="navbar-menu" :class="{ 'is-active': isOpen }">
         <div class="navbar-start">
-          <RouterLink to="/Index" class="navbar-item"> Home </RouterLink>
+          <RouterLink to="/" class="navbar-item"> Home </RouterLink>
           <RouterLink to="/products" class="navbar-item"> Shop </RouterLink>
 
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link"> More </a>
+
             <div class="navbar-dropdown">
               <RouterLink to="/about" class="navbar-item"> About </RouterLink>
               <RouterLink to="/jobs" class="navbar-item">Jobs</RouterLink>
@@ -50,17 +51,18 @@ const isCartOpen = ref(false)
 
         <div class="navbar-end">
           <div class="navbar-item">
-            <div class="buttons">       
-            <LoginBadge />
-            <button
-              class="button is-warning is-light is-active"
-              :class="{ 'is-focused': isCartOpen }"
-              @click="isCartOpen = !isCartOpen"
-            >
-              <span class="icon">
-                <i class="fas fa-shopping-cart"></i>
-              </span>
-            </button>
+            <div class="buttons">
+              <LoginBadge />
+              <button
+                class="button is-warning is-light is-active"
+                :class="{ 'is-focused': isCartOpen }"
+                @click="isCartOpen = !isCartOpen"
+              >
+                <span class="icon">
+                  <i class="fas fa-shopping-cart"></i>
+                </span>
+              </button>
+            </div>
           </div>
         </div>
       </div>

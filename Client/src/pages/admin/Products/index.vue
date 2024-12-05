@@ -35,8 +35,8 @@ getAll().then((data) => {
             {{ product.description }}
           </td>
           <td>
-            <router-link :to="'/admin/Products/edit/' + product.id" class="btn btn-primary"
-              >Edit</router-link
+            <router-link :to="'/admin/Products/edit/' + product.id" class="btn btn-primary">
+              Edit</router-link
             >
             <button class="btn btn-danger">Delete</button>
           </td>
