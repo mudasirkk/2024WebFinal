@@ -1,9 +1,8 @@
-import reactLogo from "./assets/react.svg";
 import "./App.css";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-const NavBar = () => <nav>NavBar</nav>;
+import NavBar from "./components/NavBar";
 
 const Home = () => (
   <div>
@@ -15,7 +14,6 @@ const Home = () => (
 function App() {
   return (
     <BrowserRouter>
-      <img src={reactLogo} className="logo react" alt="React logo" />
       <header>
         <NavBar />
       </header>
